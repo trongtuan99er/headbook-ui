@@ -1,5 +1,5 @@
 import "./login.scss";
-
+import { Link } from "react-router-dom";
 const Login = () => {
 
   const handleLogin = () => {
@@ -17,7 +17,9 @@ const Login = () => {
             consequatur.
           </p>
           <span>Bạn không có tài khoản ?</span>
-          <button>Đăng ký</button>
+          <Link to="/register">
+          <button>Dăng ký</button>
+          </Link>
         </div>
         <div className="right">
           <h1>Đăng nhập</h1>

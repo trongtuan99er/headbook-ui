@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./register.scss";
 
 const Register = () => {
@@ -12,9 +13,9 @@ const Register = () => {
             consequatur.
           </p>
           <span>Bạn đã có tài khoản ?</span>
-          <a href="/login">
+          <Link to="/login">
           <button>Đăng nhập</button>
-          </a>
+          </Link>
         </div>
         <div className="right">
           <h1>Đăng ký</h1>
