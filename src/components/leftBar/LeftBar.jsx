@@ -12,9 +12,11 @@ import Messages from "../../assets/10.png";
 import Tutorials from "../../assets/11.png";
 import Courses from "../../assets/12.png";
 import Fund from "../../assets/13.png";
+import { AuthContext } from "../../context/authContext";
+import React from "react";
 
 const LeftBar = () => {
-
+  const { currentUser } = React.useContext(AuthContext);
 
   return (
     <div className="leftBar">
@@ -22,10 +24,10 @@ const LeftBar = () => {
         <div className="menu">
           <div className="user">
             <img
-              src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNAUvIj8tIlcc6MemlkLaXGlOLNplzf-3euA&usqp=CAU'
+              src={currentUser.profilePic}
               alt=""
             />
-            <span>TrongTuan </span>
+            <span>{currentUser.userName}</span>
           </div>
           <div className="item">
             <img src={Friends} alt="" />
