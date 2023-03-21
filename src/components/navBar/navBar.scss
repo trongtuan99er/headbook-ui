@@ -60,6 +60,8 @@
       }
 
       .user {
+        cursor: pointer;
+        position: relative;
         display: flex;
         align-items: center;
         gap: 10px;
@@ -76,7 +78,21 @@
           object-fit: cover;
         }
 
-        span {
+        .userItem {
+          position: absolute;
+          top: 120%;
+          left: -10px;
+          padding: 10px;
+          border: 1px solid themed("border");
+          background-color: themed("bg");
+          color: themed("textColor");
+          width: 100%;
+        }
+        .link {
+          display: block;
+          margin-bottom: 10px;
+          padding-bottom: 10px;
+          border-bottom: 1px solid themed("border");;
         }
       }
     }

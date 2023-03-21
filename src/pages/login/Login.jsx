@@ -1,14 +1,30 @@
 import "./login.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/authContext";
-import { useContext  } from "react";
+import React, { useContext  } from "react";
 
 const Login = () => {
   const { login } = useContext(AuthContext)
-  const handleLogin = () => {
-    login();
+  const [ inputs, setInputs ] = React.useState({
+    username: "",
+    password: "",
+  }) 
+  const [ err, setErr ] = React.useState(false)
+  const navigate  = useNavigate()
+
+  const handleLogin = async (e) => {
+    e.preventDefault()
+    try{
+      await login(inputs);
+      navigate('/')
+    }catch(err){
+      setErr(err.response.data)
+    }
   };
 
+  const handleChange = e => {
+    setInputs((prev) => ({...prev, [e.target.name]: e.target.value}))
+  }
   return (
     <div className="login">
       <div className="card">
@@ -27,8 +43,9 @@ const Login = () => {
         <div className="right">
           <h1>Đăng nhập</h1>
           <form>
-            <input type="text" placeholder="Tên đăng nhập" />
-            <input type="password" placeholder="Mật khẩu" />
+            <input type="text" placeholder="Tên đăng nhập" name="username" onChange={handleChange}/>
+            <input type="password" placeholder="Mật khẩu" name="password" onChange={handleChange}/>
+            <span style={{fontSize: '12px', color: "red"}}>{err && err}</span>
             <button onClick={handleLogin}>Đăng nhập</button>
           </form>
         </div>
