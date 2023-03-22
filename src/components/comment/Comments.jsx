@@ -1,28 +1,23 @@
 import { useContext } from "react";
 import "./comments.scss";
 import { AuthContext } from "../../context/authContext";
+import { useQuery } from '@tanstack/react-query'
+import { makeRequest } from "../../callAPI.js";
+import { CircularProgress } from '@mui/material';
+import moment from "moment";
+import { Link } from "react-router-dom";
 
-const Comments = () => {
+
+const Comments = ({postId}) => {
   const { currentUser } = useContext(AuthContext);
-  //Temporary
-  const comments = [
-    {
-      id: 1,
-      desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem nequeaspernatur ullam aperiam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem nequeaspernatur ullam aperiam",
-      name: "Trong Tuan",
-      userId: 1,
-      profilePicture:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNAUvIj8tIlcc6MemlkLaXGlOLNplzf-3euA&usqp=CAU",
-    },
-    {
-      id: 2,
-      desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem nequeaspernatur ullam aperiam",
-      name: "Tuan 2",
-      userId: 2,
-      profilePicture:
-        "https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=1600",
-    },
-  ];
+  const { isLoading, error, data } = useQuery({
+    queryKey: ["comments"],
+    queryFn: () => makeRequest.get("/comments?postId="+ postId).then(res => {
+      return res.data
+    })
+  }
+  )
+
   return (
     <div className="comments">
       <div className="write">
@@ -30,16 +25,26 @@ const Comments = () => {
         <input type="text" placeholder="Viết bình luận ..." />
         <button>Bình Luận</button>
       </div>
-      {comments.map((comment) => (
+      {error ? "không thể tải bình luận!":
+      isLoading ? <CircularProgress sx={{margin: 'auto', padding: '50px', display: "flex"}}/> 
+      : 
+      (
+        data?.length > 0 ? data.map((comment) => (
         <div className="comment">
-          <img src={comment.profilePicture} alt="avatar" />
+          
+          <Link className="link" to={`/profile/${comment.userId}`}>
+            <img src={comment.profilePic} alt="avatar" />
+            </Link>
           <div className="info">
-            <span>{comment.name}</span>
+            <Link className="link" to={`/profile/${comment.userId}`}>
+              <span>{comment.name}</span>
+            </Link>
             <p>{comment.desc}</p>
           </div>
-          <span className="date">1 phút trước</span>
+          <span className="date">{comment.createdAt ? moment(comment.createdAt).fromNow() : "N/A"}</span>
         </div>
-      ))}
+      )) : <span>Chưa có bình luận nào trên bài viết này!</span>
+      )}
     </div>
   );
 };

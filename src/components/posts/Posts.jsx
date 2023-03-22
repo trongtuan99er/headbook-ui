@@ -13,7 +13,7 @@ const Posts = () => {
     })
   }
   )
-  console.log(data);
+
   return <div className="posts">
     {
       error ? "Có lỗi, không thể tải!" : isLoading ? <CircularProgress sx={{margin: 'auto', padding: '50px'}} /> : data.map(post=>(

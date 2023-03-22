@@ -49,10 +49,13 @@
 
         span {
           font-weight: 500;
+          color:themed("textColorSoft");
+          font-weight: bold;
         }
 
         p{
-          color:themed("textColorSoft")
+          color:themed("textColorSoft");
+          margin: 0;
         }
       }
 
