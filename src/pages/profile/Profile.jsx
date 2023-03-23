@@ -2,16 +2,39 @@ import "./profile.scss";
 import FacebookTwoToneIcon from "@mui/icons-material/FacebookTwoTone";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TwitterIcon from "@mui/icons-material/Twitter";
-import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Posts from "../../components/posts/Posts"
+import { useContext, useState } from "react";
+import { AuthContext } from "../../context/authContext";
+import { useLocation, Link } from "react-router-dom";
+import { useQuery } from '@tanstack/react-query';
+import { makeRequest } from "../../callAPI";
+import ProfileDetail from "../profileDetai/ProfileDetail";
 
 const Profile = () => {
+  const [open, setOpen] = useState(false)
+  const [showDetail, setShowDetail] = useState(false)
+  const { currentUser } = useContext(AuthContext)
+  const userId = parseInt(useLocation().pathname.split("/")[2])
+  const { isLoading, error, data } = useQuery({
+    queryKey: ["user"],
+    queryFn: () => makeRequest.get("/users/find/"+ userId).then(res => {
+      return res.data
+    })
+    }
+  )
+  const handleOpen = () => {
+    setOpen(!open)
+  }
+  const handleShowDetail  = () => {
+    setShowDetail(true)
+    setOpen(false)
+  }
   return (
     <div className="profile">
       <div className="images">
         <img
-          src="https://i.pinimg.com/736x/44/29/f0/4429f02128255f000ff0f11e03fc2cb2.jpg"
+          src={data?.coverPic}
           alt=""
           className="cover"
         />
@@ -21,33 +44,43 @@ const Profile = () => {
           <div className="shortInfo">
             <div className="avtBox">
               <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNAUvIj8tIlcc6MemlkLaXGlOLNplzf-3euA&usqp=CAU"
+                src={data?.profilePic}
                 alt="avatar"
                 className="profilePic"
               />
-              <span>Trọng Tuấn</span>
+            <span>{data?.name}</span>
             </div>
-              <button>Theo dỗi</button>
+            {userId === currentUser.id ? <button>Cập nhập</button> : <button>Theo dỗi</button>}
+            
           </div>
           <div className="moreInfo">
           <div className="left">
             <a href="http://facebook.com">
               <FacebookTwoToneIcon fontSize="large" />
             </a>
-            <a href="http://facebook.com">
+            <a href="http://instagram.com/">
               <InstagramIcon fontSize="large" />
             </a>
-            <a href="http://facebook.com">
+            <a href="http://twitter.com/?lang=vi">
               <TwitterIcon fontSize="large" />
             </a>
           </div>
           <div className="right">
-            <EmailOutlinedIcon />
-            <MoreVertIcon />
+            <MoreVertIcon onClick={handleOpen}/>
+            {open && (
+            <div className="userItem">
+              <span onClick={() => setShowDetail(false)}>Bài Viết</span>
+              <span onClick={handleShowDetail}>Giới thiệu</span>
+            </div>
+          )}
           </div>
           </div>
         </div>
-      <Posts/>
+      <div>
+        {
+          showDetail ? <ProfileDetail data={data}/> : <Posts/>
+        }
+      </div>
       </div>
     </div>
   );
