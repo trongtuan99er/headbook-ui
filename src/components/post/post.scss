@@ -13,6 +13,7 @@
       padding: 20px;
 
       .user {
+        position: relative;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -70,6 +71,36 @@
         }
         .liked {
           color: red
+        }
+      }
+      .btnMenu {
+        padding: 5px;
+        border-radius: 50%;
+        border: 1px solid themed("border");
+        background-color: themed("bg");
+        &:hover {
+          background-color: darksalmon;
+          border-color: darksalmon;
+        }
+      }
+      .menu {
+        position: absolute;
+        top: 100%;
+        right: 0px;
+        padding: 10px;
+        max-width: 40%;
+        border: 1px solid themed("boder");
+        background-color: themed("bg");
+        border-radius: 10px;
+        box-shadow: 0px 6px 6px 0px #000;
+        span {
+          display: block;
+          cursor: pointer;
+          padding: 10px;
+          color:  themed("color");
+          &:not(:last-child){
+            border-bottom: 1px solid themed("boder");
+          }
         }
       }
     }

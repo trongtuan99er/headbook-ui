@@ -14,6 +14,7 @@ import { AuthContext } from "../../context/authContext";
 
 const Post = ({ post }) => {
   const [commentOpen, setCommentOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const { currentUser } = useContext(AuthContext)
   const queryClient = useQueryClient()
 
@@ -34,9 +35,22 @@ const Post = ({ post }) => {
     }
   })
 
+  const deleteMutation = useMutation((postId) => {
+    return makeRequest.delete("/posts/"+ postId)
+  }, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['posts'])
+    }
+  })
+
   const handleLike = (e) => {
     e.preventDefault()
     mutation.mutate(data?.includes(currentUser.id))
+  }
+
+  const handleDelete = (e) => {
+    e.preventDefault()
+    deleteMutation.mutate(post.id)
   }
 
   return (
@@ -55,7 +69,19 @@ const Post = ({ post }) => {
               <span className="date">{post.createdAt ? moment(post.createdAt).fromNow() : "N/A"}</span>
             </div>
           </div>
-          <MoreHorizIcon />
+          <MoreHorizIcon className="btnMenu" onClick={() => setMenuOpen(!menuOpen)}/>
+          {menuOpen && 
+            <div className="menu">
+              { post.userId === currentUser.id && (
+              <>
+                <span onClick={handleDelete}>Xóa Bài viết</span>
+                <span>Sửa Bài viết</span>
+              </>
+              )}
+              <span>Lưu bài viết</span>
+              <span>Chia sẻ bài viết</span>
+            </div>
+          }
         </div>
         <div className="content">
           <p>{post.desc}</p>
