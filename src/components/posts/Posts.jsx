@@ -4,11 +4,11 @@ import { useQuery } from '@tanstack/react-query'
 import { makeRequest } from "../../callAPI.js";
 import { CircularProgress } from '@mui/material';
 
-const Posts = () => {
+const Posts = ({userId}) => {
 
   const { isLoading, error, data } = useQuery({
     queryKey: ["posts"],
-    queryFn: () => makeRequest.get("/posts").then(res => {
+    queryFn: () => makeRequest.get("/posts?userId="+ userId).then(res => {
       return res.data
     })
   }

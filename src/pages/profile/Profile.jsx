@@ -102,7 +102,7 @@ const Profile = () => {
         </div>
       <div>
         {
-          showDetail ? <ProfileDetail data={data}/> : <Posts/>
+          showDetail ? <ProfileDetail data={data}/> : <Posts userId={userId}/>
         }
       </div>
       </div>
