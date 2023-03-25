@@ -29,7 +29,7 @@ const LeftBar = () => {
               alt=""
             />
             <Link className="link" to={`/profile/${currentUser.id}`}>
-              <span>{currentUser.username}</span>
+              <span>{currentUser.name}</span>
             </Link>
           </div>
           <div className="item">

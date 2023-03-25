@@ -51,7 +51,7 @@ const Navbar = () => {
             src={currentUser.profilePic}
             alt="avatar"
           />
-          <span>{currentUser.username}</span>
+          <span>{currentUser.name}</span>
           {open && (
             <div className="userItem">
             <Link className="link" to={`/profile/${currentUser.id}`}>
