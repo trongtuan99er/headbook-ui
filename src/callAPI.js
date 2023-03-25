@@ -1,6 +1,9 @@
 import axios from "axios";
 
 export const makeRequest = axios.create({
-  baseURL: "http://localhost:5000/api/",
-  withCredentials: true
+  baseURL: "https://headbook.onrender.com/api/",
+  withCredentials: true, 
+  headers: {
+    token:  "Bearer " + JSON.parse(localStorage.getItem("currentUser"))?.token,
+  }
 })

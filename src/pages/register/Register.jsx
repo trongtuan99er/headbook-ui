@@ -19,7 +19,7 @@ const Register = () => {
   const handleRegister = async e => {
     e.preventDefault()
     try{
-      await axios.post("http://localhost:5000/api/auth/register", inputs)
+      await axios.post("https://headbook.onrender.com/api/auth/register", inputs)
       navigate('/login')
     }catch(err){
       setErr(err.response.data)

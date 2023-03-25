@@ -16,8 +16,8 @@ const Posts = ({userId}) => {
 
   return <div className="posts">
     {
-      error ? "Có lỗi, không thể tải!" : isLoading ? <CircularProgress sx={{margin: 'auto', padding: '50px'}} /> : data.map(post=>(
-      <Post post={post} key={post.id}/>
+      error ? "Có lỗi, không thể tải!" : isLoading ? <CircularProgress sx={{margin: 'auto', padding: '50px'}} /> : data.map((post, index)=>(
+      <Post post={post} key={index}/>
     ))
     }
   </div>;
