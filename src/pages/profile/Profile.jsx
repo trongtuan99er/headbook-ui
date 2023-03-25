@@ -10,13 +10,18 @@ import { useLocation, Link } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { makeRequest } from "../../callAPI";
 import ProfileDetail from "../profileDetai/ProfileDetail";
+import UpdateUser from "../../components/updateUser/UpdateUser";
+import Modal from "../../components/modal/Modal";
 
 const Profile = () => {
   const [open, setOpen] = useState(false)
+  const [modal, setModal] = useState(false);
   const [showDetail, setShowDetail] = useState(false)
   const { currentUser } = useContext(AuthContext)
   const queryClient = useQueryClient()
   const userId = parseInt(useLocation().pathname.split("/")[2])
+
+  const Toggle = () => setModal(!modal);
 
   const { isLoading, error, data } = useQuery({
     queryKey: ["user"],
@@ -74,7 +79,7 @@ const Profile = () => {
               />
             <span>{data?.name}</span>
             </div>
-            {rlIsLoading ? <button>Loading</button> : userId === currentUser.id ? <button>Cập nhập</button> : <button onClick={handleFollow}>{dataRelationship?.includes(currentUser.id) ? "Đang theo dõi" : "Theo dỗi"}</button>}
+            {rlIsLoading ? <button>Loading</button> : userId === currentUser.id ? <button onClick={() => Toggle()}>Cập nhập</button> : <button onClick={handleFollow}>{dataRelationship?.includes(currentUser.id) ? "Đang theo dõi" : "Theo dỗi"}</button>}
             
           </div>
           <div className="moreInfo">
@@ -106,6 +111,10 @@ const Profile = () => {
         }
       </div>
       </div>
+
+      {<Modal show={modal} title="Cập nhập Profile" close={Toggle}>
+        <UpdateUser close={Toggle} user={data}/>
+      </Modal>}
     </div>
   );
 };

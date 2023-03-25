@@ -1,0 +1,101 @@
+.update {
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+    .wrapper {
+      height: 100%;
+      h1 {
+        color: lightgrey;
+      }
+
+      form {
+        height: calc(100% - 100px);
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        .files {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 50px;
+        }
+
+        label {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          color: #000;
+          font-size: 14px;
+          font-weight: 700;
+          .imgContainer {
+            position: relative;
+            img {
+              width: 100px;
+              height: 100px;
+              object-fit: cover;
+            }
+
+            .icon {
+              position: absolute;
+              top: 0;
+              bottom: 0;
+              left: 0;
+              right: 0;
+              margin: auto;
+              font-size: 30px;
+              color: lightgray;
+              cursor: pointer;
+            }
+          }
+        }
+
+        input {
+          padding: 5px;
+          border: none;
+          border-bottom: 1px solid #ccc;
+          color: gray;
+          background-color: transparent;
+          font-weight: 600;
+        }
+
+      
+        .inputFiled {
+          display: flex;
+          align-items: center;
+          padding: 5px 0;
+          input {
+            flex: 1;
+          }
+          label {
+            min-width: 130px;
+          }
+          select {
+            padding: 5px 10px;
+          }
+        }
+      }
+
+      button {
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        color: white;
+        width: fit-content;
+        text-align: right;
+        background-color: #5271ff;
+      }
+
+
+      .close {
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        border: none;
+        background-color: #f0544f;
+        padding: 5px;
+        cursor: pointer;
+        color: white;
+      }
+    }
+  }
